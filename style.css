@@ -1,51 +1,85 @@
-/* 공통 리셋 */
+/* [1] 공통 리셋 및 기본 설정 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-/* 네비게이션 */
+/* [2] 네비게이션 - 텍스트 크기 및 간격 최적화 */
 .navbar { position: fixed; top: 40px; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 1000; gap: 100px; transition: 0.3s; }
 .nav-right { display: flex; gap: 60px; }
-.nav-item { cursor: pointer; opacity: 0.6; transition: 0.3s; font-size: 13px; letter-spacing: 2px; }
+.nav-item { cursor: pointer; opacity: 0.6; transition: 0.3s; font-size: 16px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
 .nav-item:hover, .nav-item.clicked { opacity: 1; }
 
-/* 오버레이 공통 */
+/* [3] 오버레이 및 닫기 버튼 */
 .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; overflow-y: auto; }
 .overlay.active { opacity: 1; pointer-events: auto; }
 .close-btn { position: fixed; top: 40px; right: 60px; cursor: pointer; font-size: 12px; letter-spacing: 2px; border-bottom: 1px solid #fff; z-index: 9999; }
 
-/* 프로젝트 오버레이 상세 */
+/* [4] 프로젝트 상세 레이아웃 (카드 1, 3 공통) */
 .project-header { width: 100%; padding: 150px 0 80px 0; text-align: center; }
 #project-title { font-size: clamp(30px, 8vw, 60px); font-weight: 200; letter-spacing: 15px; text-transform: uppercase; }
 .project-group { display: none; flex-direction: column; align-items: center; gap: 60px; padding-bottom: 100px; }
 .project-group.active { display: flex; }
 .content-box { width: 85%; max-width: 1000px; }
-.content-box img { width: 100%; height: auto; }
+.content-box img { width: 100%; height: auto; display: block; }
 
-/* 메인 카드 레이아웃 */
+/* [5] 메인 화면 카드 섹션 */
 .wrapper { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; transition: 0.8s; }
 .wrapper.out { transform: scale(1.1); opacity: 0; pointer-events: none; }
 .container { display: flex; gap: 20px; align-items: center; transition: 0.5s; }
-
-/* 카드 스타일 통합 */
 .card { width: 280px; height: 420px; cursor: pointer; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-.card-inner { 
-    position: relative; width: 100%; height: 100%; overflow: hidden; 
-    background-color: #111; background-size: cover; background-position: center;
-    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 30px; 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-}
-
-/* 카드 호버 애니메이션 */
+.card-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background-color: #111; background-size: cover; background-position: center; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
 .container:hover .card { opacity: 0.3; transform: scale(0.95); }
 .card:hover { opacity: 1 !important; transform: scale(1.05) translateY(-10px) !important; z-index: 10; }
 
-/* 유튜브 iframe 카드 설정 */
+/* [6] 메인 카드 내 유튜브 배경 */
 .iframe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .iframe-container iframe { position: absolute; top: 50%; left: 50%; width: 350%; height: 100%; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.4); transition: 0.5s; }
 .card:hover iframe { filter: brightness(0.8); }
 .card-title { position: relative; z-index: 1; font-size: 11px; letter-spacing: 2px; color: #fff; pointer-events: none; }
 
-/* CONTACT 효과 */
+/* [7] 카드 2번 전용 가로 리퀴드 레이아웃 (모바일 최적화 포함) */
+.youtube-special-layout { width: 100%; display: none; flex-direction: column; align-items: center; }
+.youtube-special-layout.active { display: flex; }
+
+.liquid-glass-section { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; padding: 0 5%; }
+
+.landscape-frame { 
+    position: relative; 
+    width: 100%; 
+    max-width: 1000px; 
+    aspect-ratio: 16 / 9; 
+    background: #000; 
+    border-radius: 20px; 
+    z-index: 10;
+    /* 모바일 곡률 픽스 */
+    -webkit-mask-image: -webkit-radial-gradient(white, black); 
+    overflow: hidden; 
+}
+
+.liquid-border { 
+    position: absolute; 
+    top: -5px; bottom: -5px; left: -5px; right: -5px; 
+    background: linear-gradient(45deg, #00f2ff, #0062ff, #ff00de, #00f2ff); 
+    background-size: 400%; 
+    border-radius: 25px; 
+    z-index: -1; 
+    filter: blur(10px); 
+    animation: liquid-flow 8s linear infinite; 
+}
+
+@keyframes liquid-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+.video-container { 
+    width: 100%; height: 100%; border-radius: 20px; overflow: hidden; position: relative; 
+    transform: translateZ(0); -webkit-transform: translateZ(0); 
+}
+.video-container iframe { width: 100%; height: 100%; border: none; border-radius: 20px; }
+
+/* [8] 카드 2번 하단 이미지 리스트 */
+.scroll-portfolio-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 60px; padding-bottom: 100px; }
+.portfolio-item { width: 85%; max-width: 1000px; }
+.portfolio-item img { width: 100%; height: auto; display: block; }
+
+/* [9] CONTACT & ABOUT */
 .contact-layout { position: relative; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
 .bg-text { font-size: 12vw; font-weight: 900; color: rgba(255,255,255,0.03); }
 .blob { position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(80px); opacity: 0; transition: 2s; z-index: 0; }
@@ -56,245 +90,24 @@ body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow
 .line { width: 0; height: 1px; background: #fff; margin: 20px auto; transition: 1.5s ease 0.5s; }
 .overlay.active .line { width: 150px; }
 .value { font-size: 25px; text-decoration: none; color: #fff; font-weight: 200; }
+.center-title { font-size: 50px; letter-spacing: 10px; text-align: center; margin-top: 20vh; }
+.center-text { text-align: center; color: #888; margin-top: 20px; }
 
-/* 모바일 반응형 (Media Query) */
+/* [10] 전역 배경 영상 */
+.video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: brightness(0.4); }
+.video-background video { width: 100%; height: 100%; object-fit: cover; }
+
+/* [11] 모바일 반응형 최종 정리 */
 @media (max-width: 768px) {
     body { overflow-y: auto; }
-    .navbar { top: 20px; gap: 40px; }
-    .nav-right { gap: 25px; }
+    .navbar { top: 20px; gap: 30px; }
+    .nav-right { gap: 20px; }
+    .nav-item { font-size: 14px; letter-spacing: 1px; }
     .wrapper { height: auto; padding: 100px 0; }
     .container { flex-direction: column; gap: 40px; }
     .card { width: 85vw; height: 125vw; }
     .close-btn { right: 20px; top: 20px; }
-}
-
-/* 배경 영상 */
-.video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: brightness(0.4); }
-.video-background video { width: 100%; height: 100%; object-fit: cover; }
-.center-title { font-size: 50px; letter-spacing: 10px; text-align: center; margin-top: 20vh; }
-.center-text { text-align: center; color: #888; margin-top: 20px; }
-
-/* ⭐ 카드 2번 전용: 가로형 리퀴드 레이아웃 */
-.youtube-special-layout {
-    width: 100%;
-    display: none; /* 기본 숨김 */
-    flex-direction: column;
-    align-items: center;
-}
-.youtube-special-layout.active { display: flex; }
-
-.liquid-glass-section {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 가로형 프레임 (눞혀진 사각형) */
-.landscape-frame {
-    position: relative;
-    width: 80%;           /* 가로로 넓게 */
-    max-width: 1000px;    /* 카드 1번 박스와 동일한 맥스값 */
-    aspect-ratio: 16 / 9; /* 가로형 비율 */
-    border-radius: 20px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
-}
-
-.liquid-border {
-    position: absolute;
-    top: -4px; left: -4px; right: -4px; bottom: -4px;
-    border-radius: 24px;
-    z-index: -1;
-    background: linear-gradient(45deg, #00f2ff, #0062ff, #ff00de, #00f2ff);
-    background-size: 300%;
-    filter: blur(15px);
-    animation: liquid-flow 6s linear infinite;
-    opacity: 0.6;
-}
-
-@keyframes liquid-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.video-container { width: 100%; height: 100%; border-radius: 15px; overflow: hidden; background: #000; }
-.video-container video { width: 100%; height: 100%; object-fit: cover; }
-
-/* ⭐ 하단 이미지 박스: 카드 1번(.content-box)과 동일한 설정 */
-.scroll-portfolio-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 60px; /* 카드 1번의 gap과 동일 */
-}
-
-.portfolio-item {
-    width: 85%; /* 카드 1번 content-box와 동일 */
-    max-width: 1000px;
-}
-
-.portfolio-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* 가로형 프레임 내 유튜브 최적화 */
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    overflow: hidden;
-    background: #000;
-}
-
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    /* 영상이 프레임 곡선에 맞춰 잘리도록 설정 */
-    border-radius: 15px; 
-}
-
-/* 리퀴드 글라스 섹션 및 프레임 (이전과 동일) */
-.liquid-glass-section {
-    width: 100%;
-    height: 20vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.landscape-frame {
-    position: relative;
-    width: 85%;           /* 가로 너비 */
-    max-width: 1000px;    /* 카드 1번 박스와 동일 */
-    aspect-ratio: 16 / 9; /* 유튜브 표준 비율 */
-    border-radius: 20px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
-}
-
-.liquid-border {
-    position: absolute;
-    top: -4px; left: -4px; right: -4px; bottom: -4px;
-    border-radius: 24px;
-    z-index: -1;
-    background: linear-gradient(45deg, #00f2ff, #0062ff, #ff00de, #00f2ff);
-    background-size: 300%;
-    filter: blur(15px);
-    animation: liquid-flow 6s linear infinite;
-    opacity: 0.6;
-}
-
-@keyframes liquid-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 하단 이미지 박스 설정 (카드 1번과 동일) */
-.scroll-portfolio-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 60px;
-}
-.portfolio-item { width: 85%; max-width: 1000px; }
-.portfolio-item img { width: 100%; height: auto; display: block; }
-
-/* 카드 2번 레이아웃 초기화 */
-.youtube-special-layout {
-    width: 100%;
-    display: none; /* JS에서 active로 제어 */
-    flex-direction: column;
-    align-items: center;
-}
-.youtube-special-layout.active { display: flex; }
-
-/* 리퀴드 섹션 (가로 사각형이 배치되는 곳) */
-.liquid-glass-section {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 5%;
-}
-
-/* ⭐ 가로 사각형 본체 */
-.landscape-frame {
-    position: relative;
-    width: 100%;
-    max-width: 1000px; /* 카드 1번 박스 너비와 동일하게 맞춤 */
-    aspect-ratio: 16 / 9;
-    background: #000;
-    border-radius: 20px;
-    z-index: 10;
-}
-
-/* ⭐ 테두리 (리퀴드 효과) */
-.liquid-border {
-    position: absolute;
-    top: -5px; bottom: -5px; left: -5px; right: -5px; /* 본체보다 살짝 크게 */
-    background: linear-gradient(45deg, #00f2ff, #0062ff, #ff00de, #00f2ff);
-    background-size: 400%;
-    border-radius: 25px;
-    z-index: -1; /* 영상 뒤로 보냄 */
-    filter: blur(10px);
-    animation: liquid-flow 8s linear infinite;
-}
-
-@keyframes liquid-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 영상 컨테이너 */
-.video-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-}
-.video-container iframe {
-    width: 100%;
-    height: 100%;
-}
-
-/* 하단 이미지 섹션 (카드 1번과 동일한 스타일 적용) */
-.scroll-portfolio-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 60px; /* 이미지 사이 간격 */
-    padding-bottom: 100px;
-}
-
-.portfolio-item {
-    width: 85%;
-    max-width: 1000px;
-}
-
-.portfolio-item img {
-    width: 100%;
-    height: auto;
+    /* 모바일 프레임 곡률 최적화 */
+    .landscape-frame, .video-container, .video-container iframe { border-radius: 12px; }
+    .liquid-border { top: -3px; bottom: -3px; left: -3px; right: -3px; border-radius: 15px; filter: blur(8px); }
 }
